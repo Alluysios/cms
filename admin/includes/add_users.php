@@ -12,12 +12,12 @@
         
         $user_email = $_POST['user_email'];
         $user_password = $_POST['user_password'];
+        $user_password_hashed = password_hash($user_password, PASSWORD_DEFAULT);
 
         move_uploaded_file($user_image_temp, "../img/$user_image");
 
         $query = "INSERT INTO users(user_firstname, user_lastname, user_role, username, user_image, user_email, user_password) ";
-
-        $query .= "VALUES('{$user_firstname}', '{$user_lastname}', '{$user_role}', '{$username}', '{$user_image}', '{$user_email}', '{$user_password}') ";
+        $query .= "VALUES('{$user_firstname}', '{$user_lastname}', '{$user_role}', '{$username}', '{$user_image}', '{$user_email}', '{$user_password_hashed}') ";
 
         $create_user_query = mysqli_query($connection, $query);
 
@@ -25,7 +25,6 @@
     }
 ?>
 <form action="" method="post" enctype="multipart/form-data">    
-     
     <div class="form-group">
         <label for="user_firstname">Firstname</label>
         <input type="text" class="form-control" name="user_firstname">
@@ -73,5 +72,4 @@
        <div class="form-group">
           <input class="btn btn-primary" type="submit" name="add_user" value="Add User">
       </div>
-
 </form>
